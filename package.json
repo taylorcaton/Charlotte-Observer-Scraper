@@ -1,0 +1,29 @@
+{
+  "name": "Charlotte-Observer-Scraper",
+  "version": "1.0.0",
+  "description": "Scrapes articles from the CLT Observer and lets users comment on them!",
+  "main": "index.js",
+  "dependencies": {
+    "body-parser": "^1.18.2",
+    "cheerio": "^1.0.0-rc.2",
+    "express": "^4.16.1",
+    "express-handlebars": "^3.0.0",
+    "mongoose": "^4.12.1",
+    "request": "^2.83.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/taylorcaton/Charlotte-Observer-Scraper.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/taylorcaton/Charlotte-Observer-Scraper/issues"
+  },
+  "homepage": "https://github.com/taylorcaton/Charlotte-Observer-Scraper#readme"
+}
