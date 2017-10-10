@@ -1,11 +1,12 @@
-/* Showing Mongoose's "Populated" Method
- * =============================================== */
-
 // Dependencies
 var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+
+//Model Imports
+var Note = require("./models/Note.js");
+var Article = require("./models/Article.js");
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
@@ -45,13 +46,47 @@ db.once("open", function() {
 app.get("/scrape", function(req, res) {
   var getData = require("./clt-scraper.js");
 
+  var oldArticles = [];
+  var newArticles = [];
+
+  var articlesAdded = 0;
+  var itemsProcessed = 0;
+
   getData(function(results) {
-    results.forEach(function(ele) {
-      console.log(ele);
+    results.forEach(function(ele, i, array) {
+      ele.topic = ele.topic.replace("\n", "").trim();
+      ele.title = ele.title.replace("\n", "").trim();
+
+      var query = Article.findOne({ title: ele.title });
+      query.exec(function(err, exists) {
+        if (!exists) {
+          var article = new Article(ele);
+          article.save(function(err, save) {
+            itemsProcessed++;
+            console.log(
+              `itemsProcessed: ${itemsProcessed} of ${results.length}`
+            );
+            if (err) {
+              throw err;
+            } else {
+              console.log(save);
+              articlesAdded++;
+            }
+            if (itemsProcessed == results.length) {
+              // Tell the browser that we finished scraping the text
+              res.send("There were " + articlesAdded + " articles added");
+            }
+          });
+        } else {
+          itemsProcessed++;
+
+          if (itemsProcessed == results.length) {
+            // Tell the browser that we finished scraping the text
+            res.send("There were " + articlesAdded + " articles added");
+          }
+        }
+      });
     });
-    
-    // Tell the browser that we finished scraping the text
-    res.send("Scrape Complete");
   });
 });
 
