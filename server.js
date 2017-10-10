@@ -3,10 +3,12 @@ var express = require("express");
 var bodyParser = require("body-parser");
 var logger = require("morgan");
 var mongoose = require("mongoose");
+var exphbs = require("express-handlebars");
 
 //Model Imports
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
+
 
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
@@ -14,13 +16,16 @@ mongoose.Promise = Promise;
 // Initialize Express
 var app = express();
 
-// Use morgan and body parser with our app
+// Use morgan, body parser, and handlebars with our app
 app.use(logger("dev"));
 app.use(
   bodyParser.urlencoded({
     extended: false
   })
 );
+app.use(bodyParser.urlencoded({ extended: false }));
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
+app.set("view engine", "handlebars");
 
 // Make public a static dir
 app.use(express.static("public"));
@@ -41,6 +46,13 @@ db.once("open", function() {
 
 // Routes
 // ======
+app.get("/", function(req, res) {
+    Article.find({}, function(err, articles){
+        console.log(articles);
+        res.render("articles", {article: articles});
+    })
+    
+});
 
 // A GET request to scrape the echojs website
 app.get("/scrape", function(req, res) {
@@ -69,7 +81,6 @@ app.get("/scrape", function(req, res) {
             if (err) {
               throw err;
             } else {
-              console.log(save);
               articlesAdded++;
             }
             if (itemsProcessed == results.length) {

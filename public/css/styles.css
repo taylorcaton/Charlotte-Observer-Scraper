@@ -1,0 +1,17 @@
+body{
+    font-family: 'Roboto Slab', serif;
+    background-image: url(../images/sneaker_mesh_fabric.png);
+}
+
+.jumbotron{
+    background-image: url(../images/newspaper.jpg);
+    background-size: cover;
+}
+
+.card-header{
+    padding: 1.75rem 1.25rem;
+}
+
+.card{
+    margin-bottom: 20px;
+}
