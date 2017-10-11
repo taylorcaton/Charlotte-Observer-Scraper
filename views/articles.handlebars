@@ -18,9 +18,12 @@
             </div>
 
             <div class="card-body">
-
-                <p class="card-text">{{this.title}}</p>
-                <a class="btn btn-outline-dark" data-objectID='{{this._id}}' href="#">Save Article</a>
+                <p class="card-text">{{this.teaser}}</p>
+                {{#if this.saved}}
+                    <a class="btn btn-success disabled" id='{{this._id}}' data-id='{{this._id}}' href="#">Saved!</a>
+                {{else}}
+                    <a class="btn btn-outline-dark save-article" id='{{this._id}}' data-id='{{this._id}}' href="#">Save Article</a>
+                {{/if}}
             </div>
 
         </div>

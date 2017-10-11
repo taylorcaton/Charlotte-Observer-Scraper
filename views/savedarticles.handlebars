@@ -1,0 +1,30 @@
+<div class="jumbotron jumbotron-fluid background-image">
+
+    <div class="container">
+        <h1 class="display-3 text-center">Saved Articles</h1>
+        <hr class="my-2">
+    </div>
+</div>
+
+<div class="container">
+    {{#each article}}
+    <div class="card">
+
+        <div class="card-block">
+            <div class="card-header bg-light">
+                <h4><a href="{{this.link}}" target='_blank'>{{this.title}}</a></h4>
+
+            </div>
+
+            <div class="card-body">
+
+                <p class="card-text">{{this.teaser}}</p>
+                <a class="btn btn-outline-dark" data-id='{{this._id}}' id='view-notes' href="#">View Notes</a>
+                <a class="btn btn-outline-danger unsave-article" data-id='{{this._id}}' href="#">Remove from Saved</a>
+            </div>
+
+        </div>
+
+    </div>
+    {{/each}}
+</div>

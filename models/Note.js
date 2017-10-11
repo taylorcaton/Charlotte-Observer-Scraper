@@ -6,12 +6,12 @@ var Schema = mongoose.Schema;
 // Create the Note schema
 var NoteSchema = new Schema({
   // Just a string
-  title: {
+  text: {
     type: String
   },
-  // Just a string
-  body: {
-    type: String
+  articleID: {
+    type: String,
+    required: true,
   }
 });
 

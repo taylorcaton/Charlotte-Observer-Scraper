@@ -9,7 +9,6 @@ var exphbs = require("express-handlebars");
 var Note = require("./models/Note.js");
 var Article = require("./models/Article.js");
 
-
 // Set mongoose to leverage built in JavaScript ES6 Promises
 mongoose.Promise = Promise;
 
@@ -47,15 +46,51 @@ db.once("open", function() {
 // Routes
 // ======
 app.get("/", function(req, res) {
-    Article.find({}, function(err, articles){
-        console.log(articles);
-        res.render("articles", {article: articles});
-    })
-    
+  Article.find({}, function(err, articles) {
+    console.log(articles);
+    articles.reverse();
+    res.render("articles", { article: articles });
+  });
+});
+
+app.get("/savedArticles", function(req, res) {
+  Article.find({ saved: true }, function(err, articles) {
+    console.log(articles);
+    res.render("savedarticles", { article: articles });
+  });
+});
+
+app.post("/api/saveArticle", function(req, res) {
+  console.log(req.body.id);
+  Article.findByIdAndUpdate(
+    req.body.id,
+    { $set: { saved: true } },
+    { new: true },
+    function(err, msg) {
+      res.send(`updated`);
+    }
+  );
+});
+
+app.post("/api/unsaveArticle", function(req, res) {
+  console.log(req.body.id);
+  Article.findByIdAndUpdate(
+    req.body.id,
+    { $set: { saved: false } },
+    { new: true },
+    function(err, msg) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log(msg);
+      }
+      res.send(`updated`);
+    }
+  );
 });
 
 // A GET request to scrape the echojs website
-app.get("/scrape", function(req, res) {
+app.get("/api/scrape", function(req, res) {
   var getData = require("./clt-scraper.js");
 
   var oldArticles = [];
@@ -68,6 +103,7 @@ app.get("/scrape", function(req, res) {
     results.forEach(function(ele, i, array) {
       ele.topic = ele.topic.replace("\n", "").trim();
       ele.title = ele.title.replace("\n", "").trim();
+      ele.teaser = ele.teaser.replace("\n", "").trim();
 
       var query = Article.findOne({ title: ele.title });
       query.exec(function(err, exists) {
@@ -85,7 +121,7 @@ app.get("/scrape", function(req, res) {
             }
             if (itemsProcessed == results.length) {
               // Tell the browser that we finished scraping the text
-              res.send("There were " + articlesAdded + " articles added");
+              res.json(articlesAdded);
             }
           });
         } else {
@@ -93,7 +129,7 @@ app.get("/scrape", function(req, res) {
 
           if (itemsProcessed == results.length) {
             // Tell the browser that we finished scraping the text
-            res.send("There were " + articlesAdded + " articles added");
+            res.json(articlesAdded);
           }
         }
       });

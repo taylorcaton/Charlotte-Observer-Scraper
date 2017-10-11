@@ -29,11 +29,17 @@ module.exports = function(cb) {
           .children()
           .attr("href");
 
+        var teaser = $(element)
+          .contents()
+          .eq(6)
+          .text();
+
         // Save these results in an object that we'll push into the results array we defined earlier
         results.push({
           topic: topic,
           title: title,
-          link: link
+          link: link,
+          teaser: teaser
         });
       });
 
