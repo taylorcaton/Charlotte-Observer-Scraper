@@ -48,7 +48,7 @@ $(document).ready(function() {
     });
   });
 
-  $("#view-notes").on("click", function(event) {
+  $(".view-notes").on("click", function(event) {
     event.preventDefault();
     let id = $(this).attr("data-id");
     console.log(`Viewing the notes for id: ${id}`);
@@ -61,22 +61,16 @@ $(document).ready(function() {
       let div;
       if (notes) {
         notes.forEach(function(note) {
-          div += `
-                <div class="card">
-              
+          div += `<div class="card">
                       <div class="card-block">
                         <div class='card-body'>
-                        
                            <p class='card-text'>
                             ${note.text}
                            <button class='btn btn-danger float-right delete-note' data-id=${note._id} id='${note._id}'>X</button>
                            </p> 
-                           
                         </div>
                       </div>
-        
-                </div>  
-              `;
+                </div>`;
         });
       } else {
         div += `<div>
