@@ -15,6 +15,9 @@ mongoose.Promise = Promise;
 // Initialize Express
 var app = express();
 
+//Don't forget to set the PORT!!!
+var port = process.env.PORT || 8080;
+
 // Use morgan, body parser, and handlebars with our app
 app.use(logger("dev"));
 app.use(
@@ -173,6 +176,6 @@ app.get("/api/scrape", function(req, res) {
 });
 
 // Listen on port 3000
-app.listen($PORT, function() {
-  console.log("App running on port 3000!");
+app.listen(port, function() {
+  console.log("App running");
 });
