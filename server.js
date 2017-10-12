@@ -30,7 +30,8 @@ app.set("view engine", "handlebars");
 app.use(express.static("public"));
 
 // Database configuration with mongoose
-mongoose.connect("mongodb://localhost/clt-scraper");
+// mongoose.connect("mongodb://localhost/clt-scraper");
+mongoose.connect("mongodb://heroku_84tbkslt:lkmanh79jpnspv5vl5imqddltj@ds113775.mlab.com:13775/heroku_84tbkslt")
 var db = mongoose.connection;
 
 // Show any mongoose errors
