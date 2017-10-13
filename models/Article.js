@@ -19,6 +19,10 @@ var ArticleSchema = new Schema({
     type: String,
     // required: true
   },
+  photo: {
+    type: String,
+    default: 'images/coLogo.jpg',
+  },
   saved: {
     type: Boolean,
     default: false

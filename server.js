@@ -174,7 +174,7 @@ app.get("/api/scrape", function(req, res) {
     });
   });
 });
-// Listen on port 3000
+// Listen on port 8080
 app.listen(port, function() {
-  console.log("App running");
+  console.log("App running on 8080");
 });

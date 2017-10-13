@@ -34,12 +34,20 @@ module.exports = function(cb) {
           .eq(6)
           .text();
 
+        var photo = $(element)
+          .children()
+          .children()
+          .children()
+          .children()
+          .attr("src");
+
         // Save these results in an object that we'll push into the results array we defined earlier
         results.push({
           topic: topic,
           title: title,
           link: link,
-          teaser: teaser
+          teaser: teaser,
+          photo: photo
         });
       });
 
