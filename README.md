@@ -1,7 +1,7 @@
 # Charlotte-Observer-Scraper
 Scrapes articles from the CLT Observer and lets users comment on them!
 
-Link: https://clt-scraper.herokuapp.com/
+Deployed on Heroku: https://clt-scraper.herokuapp.com/
 
 ![Preview Image](https://taylorcaton.github.io/img/portfolio/cltObserver.png)
 
